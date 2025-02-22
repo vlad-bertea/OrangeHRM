@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class PIMPage extends HomePage {
 
@@ -21,6 +22,7 @@ public class PIMPage extends HomePage {
     }
 
     public PIMPage menuNavigation(WebDriver driver, String menuItem) {
+        wait.until(ExpectedConditions.visibilityOf(this.navigationBar));
         switch (menuItem) {
             case (CONFIGURATION) -> {
                 driver.findElement(By.xpath(String.format(navigationBarXpath, 1))).click();

@@ -17,8 +17,6 @@ public class AddEmployeePage extends PIMPage {
     private WebElement lastName;
     @FindBy(xpath = "//div[@class='orangehrm-card-container']//input[@class='oxd-input oxd-input--active']")
     private WebElement employeeId;
-    @FindBy(xpath = "//div[@class='orangehrm-card-container']//input[@class='oxd-input oxd-input--focus']")
-    private WebElement focusedEmployeeId;
     @FindBy(xpath = "//div[@class='orangehrm-card-container']")
     private WebElement addEmployeeForm;
 
@@ -38,9 +36,9 @@ public class AddEmployeePage extends PIMPage {
         this.lastName.sendKeys(lastName);
     }
 
-    public void typeEmployeeId(String employeeId) {
+    public void typeEmployeeId(WebDriver driver, String employeeId) {
         this.employeeId.sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
-        this.focusedEmployeeId.sendKeys(employeeId);
+        driver.switchTo().activeElement().sendKeys(employeeId);
     }
 
     public ViewPersonalDetailsPage saveEmployee(WebDriver driver) {

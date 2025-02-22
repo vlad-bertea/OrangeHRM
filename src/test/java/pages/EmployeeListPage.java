@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,8 +38,6 @@ public class EmployeeListPage extends PIMPage {
     @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--label-danger orangehrm-button-margin']")
     private WebElement deletePopupConfirmationButton;
 
-    private int recordsCount;
-
     public EmployeeListPage(WebDriver driver) {
         super(driver);
     }
@@ -74,6 +73,10 @@ public class EmployeeListPage extends PIMPage {
         return this.employeeIdFilter;
     }
 
+    public WebElement getEmployeeListTable() {
+        return this.employeeListTable;
+    }
+
     public void searchByName(WebDriver driver, String searchNameValue) {
         this.employeeNameFilter.click();
         driver.switchTo().activeElement().sendKeys(searchNameValue);
@@ -82,6 +85,7 @@ public class EmployeeListPage extends PIMPage {
 
     public void searchById(WebDriver driver, String searchIdValue) {
         this.employeeIdFilter.click();
+        driver.switchTo().activeElement().sendKeys(Keys.chord(Keys.CONTROL,"a", Keys.DELETE));
         driver.switchTo().activeElement().sendKeys(searchIdValue);
         this.searchButton.click();
         wait.until(ExpectedConditions.visibilityOf(this.records));
@@ -92,18 +96,18 @@ public class EmployeeListPage extends PIMPage {
         return new ViewPersonalDetailsPage(driver);
     }
 
-    public void deleteEmployee(WebDriver driver) {
+    public void deleteEmployee() {
         this.deleteButton.click();
         this.deletePopupConfirmationButton.click();
     }
 
     public ArrayList<String> getTableInfo(WebDriver driver, String tableInfo) {
-        this.recordsCount = getRecordsCount();
+        int recordsCount = getRecordsCount();
         String tableCellBaseXpath =
                 "((//div[@class='oxd-table-row oxd-table-row--with-border oxd-table-row--clickable'])[%s]" +
                         "//div[@class='oxd-table-cell oxd-padding-cell'])[%s]";
         ArrayList<String> result = new ArrayList<>();
-        for (int row = 1; row < this.recordsCount + 1; row += 1) {
+        for (int row = 1; row < recordsCount + 1; row += 1) {
             switch (tableInfo) {
                 case TestData.EMPLOYEE_FIRST_NAME, TestData.EMPLOYEE_MIDDLE_NAME -> {
                     String firstAndMiddleNamesXpath = String.format(tableCellBaseXpath, row, 3);

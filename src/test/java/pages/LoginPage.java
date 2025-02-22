@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import utils.TestData;
 
 import java.util.ArrayList;
 
@@ -20,14 +19,6 @@ public class LoginPage extends BasePage{
         super(driver);
     }
 
-    public HomePage login(WebDriver driver) {
-        userInputField.sendKeys(TestData.USER_NAME);
-        passwordInputField.sendKeys(TestData.PASSWORD);
-        loginButton.click();
-        return new HomePage(driver);
-    }
-
-    //To be used for login with an employee created with login credentials
     public HomePage login(WebDriver driver, String userName, String password) {
         userInputField.sendKeys(userName);
         passwordInputField.sendKeys(password);

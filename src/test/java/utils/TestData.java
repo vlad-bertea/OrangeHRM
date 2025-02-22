@@ -26,7 +26,6 @@ public class TestData {
             default -> {
                 Random random = new Random();
                 return String.valueOf(random.nextInt(10_000, 99_999));
-
             }
         }
     }
